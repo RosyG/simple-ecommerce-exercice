@@ -13,7 +13,7 @@ function createProductHTML(product) {
     <img src='${product.imageUrl}' alt='${product.description}'/>
     <p>${product.description}</p>
     <button data-product-id=${product.id}
-      onclick="addToCart(${product.id})"
+      onclick="giveEventBtn(${product.id})"
       class='btn btn-primary'>
         Agregar a carrito
       </button>
@@ -27,7 +27,14 @@ function createProductHTML(product) {
 
 drawProducts(data);
 
-function addToCart() {
+function giveEventBtn(id) {
+  let collectionTag = document.getElementsByClassName("btn-primary");
+  let tag = Array.from(collectionTag);//Arreglo de botones.
+  changeButtonStatus(tag[id],id);//Llamando a la función que cambiará el status, tiene como parametro el botón que se ha oprimido.
+}//Fin de función giveEventBtn(id)
+
+function addToCart(button, id) {
+  console.log( 'add' );
   /* cuando agrego a carrito, tengo que:
   1) Incrementar en uno mi contador del menu
   2) Guardar mi producto en algun lugar
@@ -37,6 +44,7 @@ function addToCart() {
 }
 
 function removeFromCart() {
+  console.log( 'remove' );
   /* cuando agrego a carrito, tengo que:
   1) Decrementar en uno mi contador del menu
   2) Borrar mi producto de algun lugar
@@ -55,11 +63,20 @@ function decreaseCounter() {
   y como lo incrementamos*/
 }
 
-function changeButtonStatus(button) {
+function changeButtonStatus(button,id) {
+  let status = button.innerText.toLowerCase();//El status del botón en minúsculas.
+  if (status == "agregar a carrito") {
+    button.innerText = "Quitar del carrito"
+    addToCart( id )
+  }else {
+    button.innerText = "Agregar a carrito";
+    removeFromCart( id )
+  }
+
   /* esta funcion deberia recibir un boton y
   cambiar su estatus
     Si el boton esta en agregar al carrito
       cambia el texto a quitar del carrito
     Y viceversa
   */
-}
+}//Fin de función changeButtonStatus(button, id)
