@@ -1,3 +1,7 @@
+let arrayProductAdd = [];
+// let btnCheckout = document.querySelector('#checkout');
+// btnCheckout.addEventListener('click', saveLocalS)
+
 function drawProducts(data) {
   let products = data.products;
   let productsContainer = document.getElementById("products-container");
@@ -33,7 +37,7 @@ function giveEventBtn(id) {
   changeButtonStatus(tag[id],id);//Llamando a la función que cambiará el status, tiene como parametro el botón que se ha oprimido.
 }//Fin de función giveEventBtn(id)
 
-function addToCart(button, id) {
+function addToCart(id) {
   console.log( 'add' );
   /* cuando agrego a carrito, tengo que:
   1) Incrementar en uno mi contador del menu
@@ -41,9 +45,16 @@ function addToCart(button, id) {
   3) Cambiar el boton de agregar a carrito
   por quitar del carrito
   */
-}
+  let productObjt = data.products[id];
+  arrayProductAdd.push(productObjt);
+  console.log(arrayProductAdd);
+  increaseCounter();
 
-function removeFromCart() {
+  saveLocalS ();
+
+}//Fin de función addToCart(id)
+
+function removeFromCart(id) {
   console.log( 'remove' );
   /* cuando agrego a carrito, tengo que:
   1) Decrementar en uno mi contador del menu
@@ -51,17 +62,36 @@ function removeFromCart() {
   3) Cambiar el boton de quitar del carrito
   por agregar a carrito
   */
-}
+  console.log(id);
+  for (objProductRemove of arrayProductAdd) {
+    if (id == objProductRemove.id) {
+      let indexArray = arrayProductAdd.indexOf( objProductRemove );
+    arrayProductAdd.splice( indexArray, 1 );
+    }
+    console.log(arrayProductAdd);
+
+  }
+
+  decreaseCounter();
+}//Fin de función removeFromCart()
 
 function increaseCounter() {
+  let tagCounter = document.querySelector("#counterItems");
+  let counter = tagCounter.innerText;
+  counter = counter + 1;
+  console.log(counter);
   /* como accedemos al HTML del contador
   y como lo incrementamos*/
-}
+}//Fin de función increaseCounter()
 
 function decreaseCounter() {
+  let tagCounter = document.querySelector("#counterItems");
+  let counter = tagCounter.innerText;
+  counter = counter - 1;
+  console.log(counter);
   /* como accedemos al HTML del contador
   y como lo incrementamos*/
-}
+}//Fin de función decreaseCounter()
 
 function changeButtonStatus(button,id) {
   let status = button.innerText.toLowerCase();//El status del botón en minúsculas.
@@ -71,7 +101,7 @@ function changeButtonStatus(button,id) {
   }else {
     button.innerText = "Agregar a carrito";
     removeFromCart( id )
-  }
+  }//Fin de función decreaseCounter()
 
   /* esta funcion deberia recibir un boton y
   cambiar su estatus
@@ -80,3 +110,11 @@ function changeButtonStatus(button,id) {
     Y viceversa
   */
 }//Fin de función changeButtonStatus(button, id)
+
+function saveLocalS () {
+
+  let stringArray = JSON.stringify(arrayProductAdd)
+  console.log(stringArray);
+  //localStorage.setItem('product', stringArray);
+
+}
