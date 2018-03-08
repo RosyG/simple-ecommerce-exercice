@@ -11,14 +11,20 @@ function calculateTotal() {
 
 let strProduct = localStorage.getItem('product');
 console.log(strProduct);
-
-let arrayProducts = strProduct.split(",");
-for ( strObjProduc of arrayProducts) {
-  console.log(strObjProduc);
-  //let objProduc = JSON.parse(strObjProduc);
-  //console.log(objProduc);
+let arrayProducts = strProduct.split("},{");
+console.log(arrayProducts);
+arrayProducts[0] = arrayProducts[0].substring(2);
+console.log(arrayProducts[0]);
+let iEnd = arrayProducts.length-1;
+arrayProducts[iEnd]= arrayProducts[iEnd].slice(0,-2);
+console.log(arrayProducts);
+let jsonProduc = JSON.parse(strProduct);
+console.log(jsonProduc);
+/*
+for (strObjProduct of arrayProducts) {
+  console.log(jsonProduc);
 }
-
+*/
 //product= JSON.parse(product)
 
 
