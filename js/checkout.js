@@ -1,3 +1,5 @@
+
+
 window.onload = () => {
   getObjLocalStorage();//LLamando la inf almacenada en localStorage.
 }
@@ -21,8 +23,22 @@ let jsonProduc = JSON.parse(strProduct);//Arreglo obtenido de localStorage.
 console.log(jsonProduc);
 paintCheckout(jsonProduc);
 let total = calculateTotal(jsonProduc);
+paintTotal (total);
 console.log(total);
+
 }//fin de función getObjLocalStorage()
+
+function paintTotal (total) {
+  let tableResult = document.querySelector('#table-result');//Elemento al que se le pintará la cuenta los productos agregados.
+
+  let templateResult = `<tr>
+
+    <td>${total}</td>
+  </tr>`
+  tableResult.innerHTML = templateResult;
+
+  console.log(total);
+}
 
 function paintCheckout (array) {
   let tableCheck = document.querySelector('#table-checkout');//Elemento al que se le pintará la cuenta los productos agregados.
@@ -36,6 +52,7 @@ function paintCheckout (array) {
       </tr>
         `;
   }
+
   let total =4000;
   let templateComplet = `
   <thead>
@@ -51,7 +68,7 @@ function paintCheckout (array) {
   <tr>
     <td></td>
     <td></td>
-    <td>${total}</td>
+
   </tr>
 
   </tbody>
