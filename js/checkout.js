@@ -20,8 +20,6 @@ arrayProducts[iEnd]= arrayProducts[iEnd].slice(0,-2);
 let jsonProduc = JSON.parse(strProduct);//Arreglo obtenido de localStorage.
 console.log(jsonProduc);
 paintCheckout(jsonProduc);
-let total = calculateTotal(jsonProduc);
-console.log(total);
 }//fin de función getObjLocalStorage()
 
 function paintCheckout (array) {
@@ -36,7 +34,9 @@ function paintCheckout (array) {
       </tr>
         `;
   }
-  let total =4000;
+  //let total =4000;
+  let total = calculateTotal(array);
+  console.log(total);
   let templateComplet = `
   <thead>
     <tr>
