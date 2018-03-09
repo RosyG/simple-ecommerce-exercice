@@ -1,51 +1,61 @@
-console.log('checkout.js');
-
-let tableCheck = document.querySelector('#table-checkout');//Elemento al que se le pintará la cuenta los productos agregados.
-
-function calculateTotal() {
-  //como le hacemos para extraer toda
-  //de cantidades de los elementos
-  //en mi carrito
+window.onload = () => {
+  getObjLocalStorage();//LLamando la inf almacenada en localStorage.
 }
 
 
+function calculateTotal(array) {
+  let priceTotal = 0;
+  for (let product of array) {
+    priceTotal += product.price;
+  }
+  return priceTotal;
+}
+
+function getObjLocalStorage () {
 let strProduct = localStorage.getItem('product');
-console.log(strProduct);
 let arrayProducts = strProduct.split("},{");
-console.log(arrayProducts);
 arrayProducts[0] = arrayProducts[0].substring(2);
-console.log(arrayProducts[0]);
 let iEnd = arrayProducts.length-1;
 arrayProducts[iEnd]= arrayProducts[iEnd].slice(0,-2);
-console.log(arrayProducts);
-let jsonProduc = JSON.parse(strProduct);
+let jsonProduc = JSON.parse(strProduct);//Arreglo obtenido de localStorage.
 console.log(jsonProduc);
-/*
-for (strObjProduct of arrayProducts) {
-  console.log(jsonProduc);
-}
-*/
-//product= JSON.parse(product)
+paintCheckout(jsonProduc);
+let total = calculateTotal(jsonProduc);
+console.log(total);
+}//fin de función getObjLocalStorage()
 
+function paintCheckout (array) {
+  let tableCheck = document.querySelector('#table-checkout');//Elemento al que se le pintará la cuenta los productos agregados.
+  let templateProduct = '';
 
+  for (product of array) {
+      templateProduct += `
+      <tr>
+        <th scope="row">${product.title}</th>
+        <td>${product.price}</td>
+      </tr>
+        `;
+  }
+  let total =4000;
+  let templateComplet = `
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Price</th>
+      <th scope="col">Total</th>
+    </tr>
+  </thead>
+  <tbody>
 
-// localStorage.setItem('usuario', JSON.stringify(usuario)
-// var usuario = localStorage.getItem('usuario');
-// usuario= JSON.parse(usuario)
-// console.log(usuario);
+  ${templateProduct}
+  <tr>
+    <td></td>
+    <td></td>
+    <td>${total}</td>
+  </tr>
 
+  </tbody>
+          `;
 
-
-/*
-arreglo de todos los productos agregados: [obj1, obj]
-for (var i = 0; i < array.length; i++) {
-  array[i]
-}
-forEach( obj[i].
-name
-price
-localStorage.setItem('name',name);
-localStorage.setItem('imgUs',price);
-
-)
-*/
+  tableCheck.innerHTML = templateComplet;
+}//fin de función paintCheckout(array).
